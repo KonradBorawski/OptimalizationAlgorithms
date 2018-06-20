@@ -1,0 +1,198 @@
+#: import Factory kivy.factory.Factory
+<CustomLabel@Label>
+	font_size: 22
+	halign: 'center'
+	size_hint_y: .2
+<CustomButton@Button>
+	text_size: self.size
+	halign: 'center'
+	valign: 'middle'
+<CenteredTextInput>:
+    multiline: False
+    on_text: root.update_padding()
+    padding_x: (self.width - self.text_width) / 2
+#:set color_button (0.784, 0.443, 0.216, 1)  # brown
+#:set color_button_pressed (0.659, 0.522, 0.431, 1)  # darker brown
+#:set color_font   (0.957, 0.890, 0.843, 1)  # off white
+<CustomSpinner@SpinnerOption>:
+    background_color: color_button if self.state == 'down' else color_button_pressed
+    color: color_font
+
+
+<ScreenMenu>:
+	numberOfAgents: textInputNumberOfAgents.text
+	agentsRange: textInputAgentsRange.text
+	maxIterations: textInputMaxIterations.text
+	chosenFunction: spinnerFunction.text
+	interval: labelInterval.text
+	BoxLayout:
+		canvas:
+			Color:
+				rgb: .6, .6, .6
+			Rectangle:
+				size: self.size
+				pos: self.pos
+		BoxLayout:
+			orientation: 'vertical'
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint_y: .25
+				spacing: 10
+				CustomLabel:
+					text: 'Wyznaczenie minimum'
+			GridLayout:
+				cols: 2
+				spacing: 10
+				padding: 5
+				size_hint_y: .6
+				CustomButton:
+					id: buttonPSO
+					disabled: True
+					text:'Particle Swarm Optimalization'
+					on_release: root.startAlgorithm('PSO')
+				CustomButton:
+					id: buttonBat
+					disabled: True
+					text:'Bat Algorithm'
+					on_release: root.startAlgorithm('Bat')
+				CustomButton:
+					id: buttonBlackHole
+					disabled: True
+					text:'Black Hole Algorithm'
+					on_release: root.startAlgorithm('BlackHole')
+				CustomButton:
+					id: buttonSA
+					disabled: True
+					text:'Simulated Annealing'
+					on_release: root.startAlgorithm('SA')
+			BoxLayout:
+				size_hint_y: .1
+			BoxLayout:
+				orientation: 'vertical'
+				size_hint_y: .25
+				spacing: 10
+				CustomLabel:
+					text: 'Wyznaczenie maksimum'
+			GridLayout:
+				cols: 2
+				spacing: 10
+				padding: 5
+				CustomButton:
+					id: buttonFirefly
+					text:'Firefly Algorithm'
+					on_release: root.startAlgorithm('Firefly')
+				CustomButton:
+					id: buttonGlowWorm
+					text:'Glowworm Algorithm'
+					on_release: root.startAlgorithm('GlowWorm')
+				CustomButton:
+					id: buttonGSA
+					text:'Gravitational Search Algorithm'
+					on_release: root.startAlgorithm('GSA')
+				CustomButton:
+					id: buttonCSS
+					text:'Charged System Search'
+					on_release: root.startAlgorithm('CSS')
+				CustomButton:
+					id: buttonAnt
+					text:'Ant Algorithm'
+					on_release: root.startAlgorithm('Ant')
+				CustomButton:
+					id: buttonDE
+					text:'Differential Evolution'
+					on_release: root.startAlgorithm('DE')
+			
+		BoxLayout:
+			orientation: 'vertical'
+			
+			BoxLayout:
+				padding: 10
+				orientation: 'vertical'
+				BoxLayout:
+					size_hint_y: .2
+				BoxLayout:
+					orientation: 'vertical'
+					spacing: 10
+					CustomLabel:
+						text: 'Funkcja'
+					Spinner:
+						option_cls: Factory.get("CustomSpinner")
+						id: spinnerFunction
+						text: 'Cztery szczyty'
+						values: ['Cztery szczyty', 'Funkcja Rosenbrocka', 'Funkcja Schaffera', 'Funkcja Schwefela', 'Funkcja Easoma', 'Funkcja Himmemblau', 'Funkcja Bootha', 'Opakowanie jajek']
+						on_text: 
+							if self.text == 'Cztery szczyty': textInputAgentsRange.text = '4'; buttonPSO.disabled = True; buttonBat.disabled = True ;buttonFirefly.disabled = False;buttonGSA.disabled = False;buttonCSS.disabled = False;buttonAnt.disabled = False;buttonBlackHole.disabled = True;buttonGlowWorm.disabled = False;buttonSA.disabled = True;buttonDE.disabled = False
+							elif self.text == 'Funkcja Rosenbrocka': textInputAgentsRange.text = '2'; buttonPSO.disabled = False; buttonBat.disabled = False ;buttonFirefly.disabled = False;buttonGSA.disabled = False;buttonCSS.disabled = False;buttonAnt.disabled = False;buttonBlackHole.disabled = False;buttonGlowWorm.disabled = False;buttonSA.disabled = False;buttonDE.disabled = False
+							elif self.text == 'Funkcja Schaffera': textInputAgentsRange.text = '5'; buttonPSO.disabled = False; buttonBat.disabled = False ;buttonFirefly.disabled = False;buttonGSA.disabled = False;buttonCSS.disabled = False;buttonAnt.disabled = False;buttonBlackHole.disabled = False;buttonGlowWorm.disabled = False;buttonSA.disabled = False;buttonDE.disabled = False
+							elif self.text == 'Funkcja Schwefela': textInputAgentsRange.text = '40'; buttonPSO.disabled = False; buttonBat.disabled = False ;buttonFirefly.disabled = True;buttonGSA.disabled = True;buttonCSS.disabled = True;buttonAnt.disabled = True;buttonBlackHole.disabled = False;buttonGlowWorm.disabled = True;buttonSA.disabled = False;buttonDE.disabled = True
+							elif self.text == 'Funkcja Easoma': textInputAgentsRange.text = '5'; buttonPSO.disabled = False; buttonBat.disabled = False ;buttonFirefly.disabled = True;buttonGSA.disabled = True;buttonCSS.disabled = True;buttonAnt.disabled = True;buttonBlackHole.disabled = False;buttonGlowWorm.disabled = True;buttonSA.disabled = False;buttonDE.disabled = True
+							elif self.text == 'Funkcja Bealea': textInputAgentsRange.text = '5'; buttonPSO.disabled = False; buttonBat.disabled = False ;buttonFirefly.disabled = True;buttonGSA.disabled = True;buttonCSS.disabled = True;buttonAnt.disabled = True;buttonBlackHole.disabled = False;buttonGlowWorm.disabled = True;buttonSA.disabled = False;buttonDE.disabled = True
+							elif self.text == 'Funkcja Himmemblau': textInputAgentsRange.text = '4'; buttonPSO.disabled = False; buttonBat.disabled = False ;buttonFirefly.disabled = True;buttonGSA.disabled = True;buttonCSS.disabled = True;buttonAnt.disabled = True;buttonBlackHole.disabled = False;buttonGlowWorm.disabled = True;buttonSA.disabled = False;buttonDE.disabled = True
+							elif self.text == 'Funkcja Bootha': textInputAgentsRange.text = '10'; buttonPSO.disabled = False; buttonBat.disabled = False ;buttonFirefly.disabled = True;buttonGSA.disabled = True;buttonCSS.disabled = True;buttonAnt.disabled = True;buttonBlackHole.disabled = False;buttonGlowWorm.disabled = True;buttonSA.disabled = False;buttonDE.disabled = True
+							elif self.text == 'Opakowanie jajek': textInputAgentsRange.text = '5'; buttonPSO.disabled = False; buttonBat.disabled = False ;buttonFirefly.disabled = True;buttonGSA.disabled = True;buttonCSS.disabled = True;buttonAnt.disabled = True;buttonBlackHole.disabled = False;buttonGlowWorm.disabled = True;buttonSA.disabled = False;buttonDE.disabled = True
+						font_size: 32
+				BoxLayout:
+					size_hint_y: .3
+				BoxLayout:
+					orientation: 'vertical'
+					spacing: 10
+					CustomLabel:
+						text: 'Iloœæ agentów'
+					CenteredTextInput:
+						id: textInputNumberOfAgents
+						text: '20'
+						size_hint_y: .2
+						height: '32dp'
+						width: '250dp'
+				
+				BoxLayout:
+					size_hint_y: .3	
+				BoxLayout:
+					orientation: 'vertical'
+					spacing: 10
+					CustomLabel:
+						text: 'Zasiêg'
+					CenteredTextInput:
+						id: textInputAgentsRange
+						text: '4'
+						size_hint_y: .2
+						height: '32dp'
+						width: '250dp'
+				BoxLayout:
+					size_hint_y: .3	
+				BoxLayout:
+					orientation: 'vertical'
+					spacing: 10
+					CustomLabel:
+						text: 'Maksymalna iloœæ iteracji'
+					CenteredTextInput:
+						id: textInputMaxIterations
+						text: '200'
+						size_hint_y: .2
+						height: '32dp'
+						width: '250dp' 
+				BoxLayout:
+					size_hint_y: .4
+				BoxLayout:
+					orientation: 'vertical'
+					spacing: 10
+					CustomLabel:
+						text: 'Szybkoœæ iteracji'
+					BoxLayout:
+						Slider:
+							id: slider_id
+							min: 0
+							max: 10
+							value: 10
+						Label: 
+							id: labelInterval
+							size_hint_x: .1
+							text: str( round( ((1000 - ((slider_id.value) * 90))/1000),2) )   
+				BoxLayout:
+					size_hint_y: .3
+			BoxLayout:
+				size_hint_y: .25
+				Button:
+					text: 'WyjdŸ'
+					on_release: root.stopApplication()
+					
